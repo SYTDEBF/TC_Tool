@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/wave2.css">
+		<script src="js/bootstrap.min.js"></script>
+		<meta charset="utf-8" />
+		<title>111</title>
+	</head>
+	<body >	
+		<div class="container">
+		  <div class="row">
+		    <div class="col">
+				<div class="box1">
+					<div class="tc_box" style="top:2%;left:18.5%;">
+					<div><span class="tc_title">行车信息</span></div>
+					<div class="short_memoery_0" style="margin-top: 5px;">
+					 <span class="text1_info_2">本次行驶</span>	
+					</div>
+					<div class="short_memoery">
+						<div class="short_memoery_1 mll">
+							<span class="text_info_2" id="totalMeil1">0</span>
+							<span class="text_info_3">km</span>
+						</div>
+						<div class="short_memoery_1 mll">
+							
+							<span class="text_info_2">0</span>
+							<span class="text_info_3">L/100km</span>
+						</div>
+						<div class="short_memoery_1">
+							<span class="text_info_2" id="travel_time_1">00 : 00</span>
+							<span class="text_info_3">h</span>
+						</div>
+					</div>
+					<div class="short_memoery_0" style="margin-top: 20px;">
+					 <span class="text1_info_2">累计行驶 [长按 OK 键重置]</span>	
+					 </div>
+					 <div class="short_memoery">
+					 	<div class="short_memoery_1 mll">
+					 	
+					 		<span class="text_info_2">0</span>
+					 		<span class="text_info_3">km</span>
+					 	</div>
+					 	<div class="short_memoery_1 mll">
+					 		
+					 		<span class="text_info_2">0</span>
+					 		<span class="text_info_3">L/100km</span>
+					 	</div>
+					 	<div class="short_memoery_1">
+					 		<span class="text_info_2" id="travel_time_2">00 : 00</span>
+					 		<span class="text_info_3">h</span>
+					 	</div>
+					 </div>
+				
+					<div style="margin-top: 15px;display: flex;align-items: center;" >
+						<span class="text1_info_2 mlr">总里程:</span>
+						<span class="text_info_2 mlr">114514</span>
+						<span class="text_info_3 mlr">km</span>
+						<img src="img/2.14a燃油.svg" width="25" height="25" alt="" />
+						<span class="text1_info_2 mlr">续航里程:</span>
+						<span class="text_info_2 mlr">776</span>
+						<span class="text_info_3">km</span>
+					</div>
+					<div></div>
+					</div> 
+					<div class="wave1"></div>
+					<div class="wave2"></div>
+					<div class="wave3"></div>
+				 </div>
+			</div>
+		    <div class="col">
+		      <div class="card">
+		        <h5 class="card-header">参数设置</h5>
+		        <div class="card-body">
+		          <div class="form-check form-switch ">
+					<label class="form-check-label" for="flexSwitchCheckCheckedDisabled">发动机状态 EngSt</label>
+		            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCheckedDisabled" checked disabled>
+		          </div>
+		          <div class="mb-3">
+		              <label for="exampleInputEmail1" class="form-label">BCS_RLWheelSpdEdgesSum</label>
+		              <input type="number" class="form-control" id="BCS_RLWheelSpdEdgesSum" aria-describedby="emailHelp" required>
+		              <div id="emailHelp" class="form-text">左后轮轮速脉冲数</div>
+		            </div>
+		            <!-- <div class="mb-3">
+		              <label for="exampleInputPassword1" class="form-label">Password</label>
+		              <input type="text" class="form-control" id="exampleInputPassword1">
+		            </div> -->
+		            
+		            <button type="button" class="btn btn-primary" onclick="start()">开始</button>
+		        </div>
+		      </div>
+		    </div>
+		    
+		  </div>
+		</div>
+		<script>
+			window.οnlοad = function init (){
+				console.log(111)
+				travelTime2 = window.localStorage.getItem("travelTime2");
+				if(travelTime2===0||travelTime2==null){
+					travelTime2=0;
+					
+				}
+			}
+			var totalMileage = 0; //总里程
+			var BCS_RLWheelSpdEdgesSum=0; //左后轮轮速脉冲数
+			var BCS_RLWheelSpdEdgesSumVD=1; //左后轮轮速脉冲信号状态
+			var EngSt=0; //发动机状态
+			var travelTime1=0; //行驶时间1
+			var travelTime1Display=0;
+			var travelTime2=0; //行驶时间2
+			var travelTime2Display=0;
+			var nowMileage=0; //小计里程
+			function start (){
+				BCS_RLWheelSpdEdgesSum = Number(document.getElementById('BCS_RLWheelSpdEdgesSum').value);
+				setInterval(totalTime1Sum, 1000);
+				setInterval(saveTotalTime2Sum, 10);
+				setInterval(saveTotalMeilSum, 1500);
+			}
+				
+			
+			
+			var totalTime1Sum = function (){
+				        travelTime1 ++;
+						travelTime2++;
+						travelTime1DisplayHour = Math.floor((travelTime1 % 86400) / 3600);
+						travelTime1DisplayMin = Math.floor(((travelTime1 % 86400) % 3600) / 60);
+						travelTime2DisplayHour = Math.floor((travelTime2 % 86400) / 3600);
+						travelTime2DisplayMin = Math.floor(((travelTime2 % 86400) % 3600) / 60);
+			            document.getElementById('travel_time_1').innerHTML = travelTime1DisplayHour+" : "+travelTime1DisplayMin;
+						document.getElementById('travel_time_2').innerHTML = travelTime2DisplayHour+" : "+travelTime2DisplayMin;
+			        };
+			var saveTotalTime2Sum = function (){
+				        window.localStorage.setItem("travelTime2",travelTime2);
+			        };
+			var saveTotalMeilSum = function (){
+				        totalMileage = (BCS_RLWheelSpdEdgesSum/(5584*8))*50*travelTime1;
+						document.getElementById('totalMeil1').innerHTML = Math.floor(totalMileage);
+				}
+			
+		</script>
+	</body>
+</html>
